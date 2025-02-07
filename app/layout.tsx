@@ -41,12 +41,9 @@ export default function RootLayout({
     >
       <html lang="en">
         <body className={cn("font-IBMPlex antialised", IBMPlex.variable)}>
-          <SignedOut>
-            <SignIn routing="hash" />
-          </SignedOut>
-          <SignedIn>{children}</SignedIn>
+                  {children}
         </body>
       </html>
-    </ClerkProvider>
+    </ClerkProvider> 
   );
 }
