@@ -1,5 +1,5 @@
 "use client";
-import { z } from "zod";
+import { object, z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
@@ -21,9 +21,9 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { defaultValues, transformationTypes } from "@/constants";
+import { aspectRatioOptions, defaultValues, transformationTypes } from "@/constants";
 import { X } from "lucide-react";
-import { dataUrl } from "@/lib/utils";
+import { AspectRatioKey, dataUrl } from "@/lib/utils";
 import { CustomField } from "./CustomField";
 import { useState } from "react";
 
@@ -91,14 +91,22 @@ const TransformationForm = ({
             formLabel="Aspect Ratio"
             className="w-full"
             render={({ field }) => (
-              <Select>
-                <SelectTrigger className="w-[180px]">
-                  <SelectValue placeholder="Theme" />
+              <Select 
+                onValueChange={(value)=>
+                  onSelectHandler(value, field.onChange)
+                }
+                
+              >
+                <SelectTrigger className="select-field">
+                  <SelectValue placeholder="Select size" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="light">Light</SelectItem>
-                  <SelectItem value="dark">Dark</SelectItem>
-                  <SelectItem value="system">System</SelectItem>
+                  {Object.keys(aspectRatioOptions).map
+                  ((key)=>(
+                    <SelectItem key={key} value= {key} className="select-item">
+                      {aspectRatioOptions[key as AspectRatioKey].label}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             )}
